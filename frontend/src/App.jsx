@@ -1,18 +1,15 @@
-import React, { useEffect } from "react";
-import { asyncgetusers } from "./store/userActions";
-import { useDispatch, useSelector } from "react-redux";
-
+import Mainroutes from "./routes/Mainroutes";
+import Navbar from "./components/Navbar";
 const App = () => {
-  const data = useSelector((state) => state);
-  const dispatch = useDispatch();
-
-  console.log(data);
-
-  useEffect(() => {
-    dispatch(asyncgetusers());
-  }, []);
-
-  return <div>App</div>;
+  return (
+    <div
+      className="px-[10%]
+    w-screen h-screen bg-gray-800 text-white font-thin"
+    >
+      <Navbar />
+      <Mainroutes />
+    </div>
+  );
 };
 
 export default App;
