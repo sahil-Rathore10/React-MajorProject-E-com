@@ -1,23 +1,18 @@
-import { nanoid } from "nanoid";
-import React from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { asyncLoginUser } from "../store/actions/userAction";
+import { useDispatch } from "react-redux";
 
 const Login = () => {
   const { register, reset, handleSubmit } = useForm();
+  const dispatch = useDispatch();
 
   const loginHandler = (user) => {
-    user.id = nanoid();
-    console.log(user);
+    dispatch(asyncLoginUser(user));
+    reset();
   };
   return (
     <form onSubmit={handleSubmit(loginHandler)} className="flex flex-col w-1/2">
-      <input
-        {...register("username")}
-        className="outline-0 border-b p-2 text-2xl"
-        type="text"
-        placeholder="John-Doe"
-      />
       <input
         {...register("email", {
           required: "Email is required",
@@ -30,14 +25,21 @@ const Login = () => {
         type="email"
         placeholder="John@Doe.com"
       />
+      {/* {errors.email && <p className="text-red-500">{errors.email.message}</p>} */}
       <input
-        {...register("password")}
-        className="outline-0 border-b p-2 text-2xl"
+        {...register("password", {
+          required: "Password is required",
+          minLength: {
+            value: 6,
+            message: "Password must be at least 6 Characters long",
+          },
+        })}
+        className="outline-0 border-b p-2 text-2xl mt-4"
         type="password"
         placeholder="*******"
       />
 
-      <button className="mt-4 px-4 py-2 bg-blue-700 rounded">
+      <button type="submit" className="mt-4 px-4 py-2 bg-blue-700 rounded">
         Login button
       </button>
 
