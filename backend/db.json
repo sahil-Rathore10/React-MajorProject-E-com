@@ -25,6 +25,13 @@
       "email": "ayush@don.com",
       "password": "12345",
       "isAdmin": false
+    },
+    {
+      "id": "3FDWIlei46MhvgDNZwKjP",
+      "username": "aman Rathore",
+      "email": "aman@rathor23.com",
+      "password": "43215",
+      "isAdmin": false
     }
   ],
   "products": [

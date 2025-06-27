@@ -29,9 +29,23 @@ export const asyncLoginUser = (user) => async (dispatch, getState) => {
     const { data } = await axios.get(
       `/users?email=${user.email}&password=${user.password}`
     );
-    localStorage.setItem("user", JSON.stringify(data[0]));
+
+    if (data.length > 0) {
+      // ✅ User found
+      const loggedInUser = data[0];
+
+      // Save to localStorage
+      localStorage.setItem("user", JSON.stringify(loggedInUser));
+
+      // Optional: dispatch to redux if you have a reducer
+      dispatch({ type: "LOGIN_SUCCESS", payload: loggedInUser });
+    } else {
+      // ❌ No user found
+      alert("Invalid email or password");
+    }
   } catch (error) {
-    console.log(error);
+    console.log("Login failed", error);
+    alert("Something went wrong. Try again later.");
   }
 };
 

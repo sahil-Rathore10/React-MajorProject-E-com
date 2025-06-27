@@ -4,11 +4,16 @@ import { asyncLoginUser } from "../store/actions/userAction";
 import { useDispatch } from "react-redux";
 
 const Login = () => {
-  const { register, reset, handleSubmit } = useForm();
+  const {
+    register,
+    reset,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const dispatch = useDispatch();
 
-  const loginHandler = (user) => {
-    dispatch(asyncLoginUser(user));
+  const loginHandler = async (user) => {
+    await dispatch(asyncLoginUser(user));
     reset();
   };
   return (
@@ -25,12 +30,12 @@ const Login = () => {
         type="email"
         placeholder="John@Doe.com"
       />
-      {/* {errors.email && <p className="text-red-500">{errors.email.message}</p>} */}
+      {errors.email && <p className="text-red-500">{errors.email.message}</p>}
       <input
         {...register("password", {
           required: "Password is required",
           minLength: {
-            value: 6,
+            value: 4,
             message: "Password must be at least 6 Characters long",
           },
         })}
@@ -38,6 +43,9 @@ const Login = () => {
         type="password"
         placeholder="*******"
       />
+      {errors.password && (
+        <p className="text-red-500">{errors.password.message}</p>
+      )}
 
       <button type="submit" className="mt-4 px-4 py-2 bg-blue-700 rounded">
         Login button
